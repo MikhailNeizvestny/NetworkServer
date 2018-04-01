@@ -28,6 +28,8 @@ namespace NetworkServer
         static Bitmap screen;
         private readonly Thread Listening;
         private string path;
+        private string serverUrl = "http://localhost:8080/ScreenshotMasterWeb/img?id=";
+        int insertedId;
         DataBaseConnector db = new DataBaseConnector();
 
         public Form1()
@@ -70,8 +72,9 @@ namespace NetworkServer
                         fileFormat = (string)binFormater.Deserialize(mainStream);
                         GetFormat(fileFormat);
                         screen.Save(path + name + fileFormat, format);
-                        binFormater.Serialize(mainStream, path + name);
                         db.insertImage(name, fileFormat);
+                        insertedId = db.getIdByName(name);
+                        binFormater.Serialize(mainStream, serverUrl + insertedId);
                     }
                 }
                 client.Close();
