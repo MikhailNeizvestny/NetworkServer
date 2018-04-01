@@ -28,6 +28,7 @@ namespace NetworkServer
         static Bitmap screen;
         private readonly Thread Listening;
         private string path;
+        DataBaseConnector db = new DataBaseConnector();
 
         public Form1()
         {
@@ -70,6 +71,7 @@ namespace NetworkServer
                         GetFormat(fileFormat);
                         screen.Save(path + name + fileFormat, format);
                         binFormater.Serialize(mainStream, path + name);
+                        db.insertImage(name, fileFormat);
                     }
                 }
                 client.Close();
