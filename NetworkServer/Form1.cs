@@ -23,23 +23,33 @@ namespace NetworkServer
         private NetworkStream mainStream;
         BinaryFormatter binFormater;
         static Rectangle bounds;
+        ImageFormat format;
+        string fileFormat, name;
         static Bitmap screen;
         private readonly Thread Listening;
         private string path;
 
         public Form1()
         {
-            path = "C:\\Users\\Cyfralus\\Documents\\Visual Studio 2015\\Projects\\WindowsFormsApplication2\\WindowsFormsApplication2\\bin\\Debug\\picture.png";
+            path = Application.StartupPath + "\\";
             client = new TcpClient();
             Listening = new Thread(StartListening);
             binFormater = new BinaryFormatter();
             InitializeComponent();
+            textBox1.Text = path;
         }
 
         private void buttonStartServer_Click(object sender, EventArgs e)
         {
-            server = new TcpListener(IPAddress.Any, 8000);
-            Listening.Start();
+            if (server == null)
+            {
+                server = new TcpListener(IPAddress.Any, 8000);
+                MessageBox.Show("Сервер запущен");
+            }
+            if (!Listening.IsAlive)
+                Listening.Start();
+            else
+                MessageBox.Show("Сервер уже запущен");
         }
 
         private void StartListening()
@@ -50,16 +60,38 @@ namespace NetworkServer
                 {
                     server.Start();
                     client = server.AcceptTcpClient();
-                    MessageBox.Show("client");
                     BinaryFormatter binFormater = new BinaryFormatter();
                     if (client.Connected)
                     {
                         mainStream = client.GetStream();
                         screen = (Bitmap)binFormater.Deserialize(mainStream);
-                        screen.Save(path, ImageFormat.Png);
+                        name = (string)binFormater.Deserialize(mainStream);
+                        fileFormat = (string)binFormater.Deserialize(mainStream);
+                        GetFormat(fileFormat);
+                        screen.Save(path + name + fileFormat, format);
+                        binFormater.Serialize(mainStream, path + name);
                     }
                 }
                 client.Close();
+            }
+        }
+
+        private void GetFormat(string strformat)
+        {
+            switch (strformat)
+            {
+                case ".jpeg":
+                    format = ImageFormat.Jpeg;
+                    break;
+                case ".bmp":
+                    format = ImageFormat.Png;
+                    break;
+                case ".png":
+                    format = ImageFormat.Png;
+                    break;
+                case ".gif":
+                    format = ImageFormat.Gif;
+                    break;
             }
         }
 
@@ -91,10 +123,16 @@ namespace NetworkServer
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    path = dialog.SelectedPath + "\\picture.png";// придумать нумерование
+                    path = dialog.SelectedPath + "\\";
                     textBox1.Text = path;
                 }
             }
+        }
+
+        private void buttonStopServer_Click(object sender, EventArgs e)
+        {
+            StopListening();
+            MessageBox.Show("Сервер остановлен");
         }
     }
 }

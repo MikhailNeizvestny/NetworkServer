@@ -32,13 +32,14 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.buttonCatalog = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.buttonStopServer = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonStartServer
             // 
             this.buttonStartServer.Location = new System.Drawing.Point(12, 12);
             this.buttonStartServer.Name = "buttonStartServer";
-            this.buttonStartServer.Size = new System.Drawing.Size(88, 81);
+            this.buttonStartServer.Size = new System.Drawing.Size(98, 81);
             this.buttonStartServer.TabIndex = 0;
             this.buttonStartServer.Text = "Запустить сервер";
             this.buttonStartServer.UseVisualStyleBackColor = true;
@@ -70,11 +71,22 @@
             this.label1.TabIndex = 3;
             this.label1.Text = "Каталог";
             // 
+            // buttonStopServer
+            // 
+            this.buttonStopServer.Location = new System.Drawing.Point(12, 114);
+            this.buttonStopServer.Name = "buttonStopServer";
+            this.buttonStopServer.Size = new System.Drawing.Size(98, 81);
+            this.buttonStopServer.TabIndex = 4;
+            this.buttonStopServer.Text = "Остановить сервер";
+            this.buttonStopServer.UseVisualStyleBackColor = true;
+            this.buttonStopServer.Click += new System.EventHandler(this.buttonStopServer_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(383, 175);
+            this.ClientSize = new System.Drawing.Size(383, 207);
+            this.Controls.Add(this.buttonStopServer);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonCatalog);
             this.Controls.Add(this.textBox1);
@@ -92,6 +104,7 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button buttonCatalog;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button buttonStopServer;
     }
 }
 
