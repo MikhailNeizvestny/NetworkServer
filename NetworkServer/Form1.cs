@@ -85,16 +85,16 @@ namespace NetworkServer
         {
             switch (strformat)
             {
-                case ".jpeg":
+                case "jpeg":
                     format = ImageFormat.Jpeg;
                     break;
-                case ".bmp":
+                case "bmp":
                     format = ImageFormat.Png;
                     break;
-                case ".png":
+                case "png":
                     format = ImageFormat.Png;
                     break;
-                case ".gif":
+                case "gif":
                     format = ImageFormat.Gif;
                     break;
             }
