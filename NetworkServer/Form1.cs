@@ -18,6 +18,7 @@ namespace NetworkServer
 {
     public partial class Form1 : Form
     {
+        const string DOT = ".";
         private TcpClient client;
         private TcpListener server;
         private NetworkStream mainStream;
@@ -71,7 +72,7 @@ namespace NetworkServer
                         name = (string)binFormater.Deserialize(mainStream);
                         fileFormat = (string)binFormater.Deserialize(mainStream);
                         GetFormat(fileFormat);
-                        screen.Save(path + name + fileFormat, format);
+                        screen.Save(path + name + DOT + fileFormat, format);
                         db.insertImage(name, fileFormat);
                         insertedId = db.getIdByName(name);
                         binFormater.Serialize(mainStream, serverUrl + insertedId);

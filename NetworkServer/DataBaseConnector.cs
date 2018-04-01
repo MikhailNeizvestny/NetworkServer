@@ -12,7 +12,7 @@ namespace NetworkServer
     {
         static string connStr = "server=localhost;user=root;database=screenshotmaker;password=;";
         MySqlConnection conn = new MySqlConnection(connStr);
-        
+
         public void insertImage(string fileName, string fileFormat)
         {
             conn.Open();
